@@ -2,34 +2,20 @@
 include 'config.php';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $staff_id = $_POST['staffId'];
-    $name = $_POST['name'];
-    $password = $_POST['pwd'];
-    $phone = $_POST['phone'];
-    $company = $_POST['company'];
+    $departure_place = $_POST['departurePlace'];
+    $departure_date = $_POST['departureDate'];
+    $departure_time = $_POST['departureTime'];
+    $arrive_place = $_POST['arrivePlace'];
+    $seats = $_POST['seats'];
 
-    function check_staff_id_duplicated($db, $id)
+    function share_care($db, $id, $departure_place, $departure_date, $departure_time, $arrive_place, $seats)
     {
-        $sql = "SELECT * FROM staff WHERE id = '$id'";
-        $result = mysqli_query($db, $sql);
-        $count = mysqli_num_rows($result);
-        if ($count == 1) {
-            return true;
-        }
-        return false;
+        $sql = "INSERT INTO carinfo(departure_place, date, time, arrive_place, share_seats, staff_id)
+                VALUES ('$departure_place', '$departure_date','$departure_time', '$arrive_place', '$seats', '$id')";
+        return $db->query($sql) === true;
     }
 
-    function create_staff($db, $id, $name, $pwd, $phone)
-    {
-        $is_duplicated = check_staff_id_duplicated($db, $id);
-        if ($is_duplicated) {
-            return false;
-        }
-        $sql = "INSERT INTO staff(id, name, password, phone, company)
-                VALUES ('$id','$name','$pwd','$phone','$company')";
-        return $conn->query($sql) === true;
-    }
-
-    $create_status = create_staff($db, $staff_id, $name, $password, $phone, $company);
+    $create_status = share_care($db, $staff_id, $departure_place, $departure_date, $departure_time, $arrive_place, $seats);
     $response = new StdClass();
     $response->success = $create_status;
     header('Content-Type: application/json');
