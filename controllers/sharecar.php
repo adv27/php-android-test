@@ -8,14 +8,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $arrive_place = $_POST['arrivePlace'];
     $seats = $_POST['seats'];
 
-    function share_care($db, $id, $departure_place, $departure_date, $departure_time, $arrive_place, $seats)
+    function share_car($db, $id, $departure_place, $departure_date, $departure_time, $arrive_place, $seats)
     {
         $sql = "INSERT INTO carinfo(departure_place, date, time, arrive_place, share_seats, staff_id)
                 VALUES ('$departure_place', '$departure_date','$departure_time', '$arrive_place', '$seats', '$id')";
         return $db->query($sql) === true;
     }
 
-    $create_status = share_care($db, $staff_id, $departure_place, $departure_date, $departure_time, $arrive_place, $seats);
+    $create_status = share_car($db, $staff_id, $departure_place, $departure_date, $departure_time, $arrive_place, $seats);
     $response = new StdClass();
     $response->success = $create_status;
     header('Content-Type: application/json');

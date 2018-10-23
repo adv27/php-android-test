@@ -12,6 +12,9 @@ switch ($request_uri[0]) {
     case '/share':
         require __DIR__.'/controllers/sharecar.php';
         break;
+    case '/listcar':
+        require __DIR__.'/controllers/listcar.php';
+        break;        
     // Everything else
     default:
         header('HTTP/1.0 404 Not Found');
