@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
         $sql = "INSERT INTO staff(id, name, password, phone, company)
                 VALUES ('$id','$name','$pwd','$phone','$company')";
-        return $conn->query($sql) === true;
+        return $db->query($sql) === true;
     }
 
     $create_status = create_staff($db, $staff_id, $name, $password, $phone, $company);
